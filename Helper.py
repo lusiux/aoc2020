@@ -13,3 +13,10 @@ def read_input(filename):
         lines.append(line)
 
     return lines
+
+def read_input_with_delimiter(filename, delim):
+    input_data = ''
+    with open(filename, 'r') as input_file:
+        input_data = input_file.read()
+
+    return input_data.split(delim)
