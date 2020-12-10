@@ -90,12 +90,43 @@ def answer_two(lines):
             seq = 0
     return product
 
+DP = {}
+def dp(jolts, index):
+    # print(f"dp({index})")
+    if index == len(jolts)-1:
+        return 1
+    if index in DP:
+        return DP[index]
+
+    combinations = 0
+    # print(jolts[index+1:min(index+4, len(jolts))])
+    for j in range(index+1, min(index+4, len(jolts))):
+        if jolts[j] - jolts[index] <= 3:
+            combinations += dp(jolts, j)
+    
+    DP[index] = combinations
+    # print(f"dp({index}) = {combinations}")
+    return combinations
+
+
+def answer_two_dp(lines):
+    jolts = to_int(lines)
+    jolts.append(0)
+    jolts.append(max(jolts)+3)
+    jolts = sorted(jolts)
+    # print(jolts)
+
+    return dp(jolts, 0)
+
 def to_int(lines):
     return [ int(x) for x in lines ]
+    
 
 if __name__ == "__main__":
     lines = Helper.read_input_with_delimiter('10/input', "\n")
 
     print('Answer one: {}'.format(answer_one(lines)))
     print('Answer two: {}'.format(answer_two(lines)))
+    print('Answer two DP: {}'.format(answer_two_dp(lines)))
+    
 
