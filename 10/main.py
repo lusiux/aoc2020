@@ -1,8 +1,6 @@
 import sys
 sys.path.append('./')
 import Helper
-import re
-import copy
 
 input_for_testing = """16
 10
@@ -48,12 +46,6 @@ larger_input_for_testing = """28
 10
 3"""
 
-input_for_calc = """1
-2
-3
-4
-5"""
-
 def answer_one(lines):
     jolts = to_int(lines)
     jolts.append(0)
@@ -68,22 +60,7 @@ def answer_one(lines):
     
     return diffs[1] * diffs[3]
 
-def lookahead(jolts):
-    if len(jolts) < 3:
-        return 0
-    start = jolts[0]
-    skip = jolts[1]
-    target = jolts[2]
-
-    retVal = 0
-    if target - start < 4:
-        retVal = 1
-
-    print(f'({start}) {skip} ({target}): {retVal} {jolts}')
-
-    return retVal
-
-def print_diffs(jolts):
+def calculate_diffs(jolts):
     diffs = []
     for index in range(len(jolts)-1):
         diffs.append(jolts[index+1] - jolts[index])
@@ -96,7 +73,7 @@ def answer_two(lines):
     jolts.append(max(jolts)+3)
     jolts = sorted(jolts)
 
-    diffs = print_diffs(jolts)
+    diffs = calculate_diffs(jolts)
     seq = 0
     product = 1
     while True:
